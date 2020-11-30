@@ -14,9 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+//    return view('welcome');
+    return redirect()->to('home'); 
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::namespace('App\Http\Controllers')->group(function() {
+    Route::prefix('driver')->group(function() {
+        Route::match(['GET','POST'], 'create', 'DriverController@create');
+        Route::get('list', 'DriverController@list');
+        Route::get('request', 'DriverController@request');
+        Route::get('ondelivery', 'DriverController@ondelivery');
+        Route::get('delete', 'DriverController@delete');
+    });
+});

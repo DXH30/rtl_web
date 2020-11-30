@@ -22,8 +22,10 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'id',
         'name',
+        'no_hp',
         'email',
         'password',
+        'valid'
     ];
 
     /**
@@ -53,5 +55,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function group()
+    {
+        return $this->belongsTo('App\Models\Group');
     }
 }
