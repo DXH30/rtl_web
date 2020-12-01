@@ -23,6 +23,18 @@ class DataController extends Controller
         $data->long = $request->input('long');
         $data->lat = $request->input('lat');
         $save = $data->save();
+        // Mengirim data no_hp, long, lat ke wapulsa
+        $send = array(
+            'no_hp' => $data->user->no_hp,
+            'lat' => $data->lat,
+            'long' => $data->long
+        );
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://wapulsa.com/RTL/update_lokasi.php");
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
         if ($save) {
             $response = array(
                 'msg' => 'Sukses input data',

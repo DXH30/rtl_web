@@ -26,4 +26,12 @@ Route::namespace('App\Http\Controllers\API')->group(function() {
     Route::post('register', 'UserController@register');
 
     Route::get('user', 'UserController@getAuthenticatedUser')->middleware('jwt.verify');
+
+    Route::prefix('driver')->group(function() {
+        Route::match(['GET','POST'], 'create', 'DriverController@create');
+        Route::get('list', 'DriverController@list');
+        Route::get('request', 'DriverController@request');
+        Route::get('ondelivery', 'DriverController@ondelivery');
+        Route::get('delete', 'DriverController@delete');
+    });
 });

@@ -31,7 +31,9 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h6><a class="collapsed card-link" href="{{url('driver/list')}}"><i class="fa fa-table fa-fw" aria-hidden="true"></i> List data Driver<button type="button" class="btn btn-info pull-right btn-sm">112        </button></a></h6>
+                            <h6><a class="collapsed card-link" href="{{url('driver/list')}}"><i class="fa fa-table
+                            fa-fw" aria-hidden="true"></i> List data Driver<button type="button" class="btn btn-danger
+                            pull-right btn-sm">{{$drivers->count()}}</button></a></h6>
                         </div>
                     </div>
 
