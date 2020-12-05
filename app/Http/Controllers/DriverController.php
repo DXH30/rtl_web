@@ -16,9 +16,24 @@ class DriverController extends Controller
             $user = new User;
             $user->id = Str::uuid();
             $user->name = $request->input('name');
-            $user->no_hp = $request->input('no_hp');
-            $user->password = Hash::make('rtltruck1234');
+            $no_hp = $request->input('no_hp');
+            $no_hp = preg_replace('/^0/', '62', $no_hp);
+            $user->no_hp = $no_hp;
+            // $password = $request->input('password');
+            $password = rand(11111,99999);
+            $user->password = Hash::make($password);
+            // $user->password = Hash::make('rtltruck1234');
             $user->email = $request->input('email');
+            // Kirim password ke nomor telepon
+            $send = array(
+                'message' => "Selamat anda telah terdaftar dengan user : $no_hp, dan password anda adalah $password"
+            );
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "http://142.11.196.41:5016/chat/sendmessage/$no_hp");
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($send));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($ch);
             $user->save();
 
             $data = new Driver;
